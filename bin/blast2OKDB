@@ -51,14 +51,14 @@ if [ ! -f $in_file ]
 		exit 1
 fi
 
-if [ ! -d ${K_DB_PATH}.phr ]
+if [ ! -f ${K_DB_PATH}.phr ]
 	then
 		echo -e "Database K-antigen does not exist,please check: ${SHELL_FOLDER}/DB "
 		exit 1
 fi
 
 
-if [ ! -d ${O_DB_PATH}.phr ]
+if [ ! -f ${O_DB_PATH}.phr ]
         then    
                 echo -e "Database O-antigen does not exist,please check: ${SHELL_FOLDER}/DB "
                 exit 1
