@@ -1,1 +1,71 @@
+#!/bin/bash
 
+helpdoc(){
+    cat <<EOF
+####################################################################################################
+Author:yangzhushuang  
+E-mail:yangzs_chi@yeah.net
+Edited by Yang Zhishuang at 2019/08/14
+The latest version was edited at : 2019/08/14 By:yangzs 
+####################################################################################################
+Description:
+
+    This shellscript  is used to annotate genomic proteins to the O&K antigen database.
+    
+    Requirement:
+	BLAST+ >= 2.6.0  (Test version: BLAST 2.6.0+)
+    
+Usage:
+
+    $0 path/to/amino_acid_file  thread [default:8]
+	
+
+
+EOF
+}
+
+
+in_file=$1
+thread=${2:-8}
+
+
+O_out_file=O_blastout.m6
+K_out_file=K_blastout.m6
+
+SHELL_FOLDER=$(cd "$(dirname "$0")";cd ..;pwd -P )
+O_DB_PATH=${SHELL_FOLDER}/DB/O-antigen_DB_from_NCBI_fasta_cds_aa
+K_DB_PATH=${SHELL_FOLDER}/DB/K-antigen_DB_from_NCBI_fasta_cds_aa
+
+# No input parameters
+if [ $# = 0 ]
+then
+    helpdoc
+    exit 1
+fi
+
+
+#check path
+if [ ! -f $in_file ]
+	then
+		echo "There is no file coresponding to $in_file "
+		exit 1
+fi
+
+if [ ! -d ${K_DB_PATH}.phr ]
+	then
+		echo -e "Database K-antigen does not exist,please check: ${SHELL_FOLDER}/DB "
+		exit 1
+fi
+
+
+if [ ! -d ${O_DB_PATH}.phr ]
+        then    
+                echo -e "Database O-antigen does not exist,please check: ${SHELL_FOLDER}/DB "
+                exit 1
+fi
+
+
+#####################################RUN
+blastp -query $in_file   -db $O_DB_PATH  -max_target_seqs 1  -max_hsps 1  -num_threads $thread -outfmt 6  -evalue 1e-5 -out $O_out_file
+
+blastp -query $in_file   -db $K_DB_PATH  -max_target_seqs 1  -max_hsps 1  -num_threads $thread -outfmt 6  -evalue 1e-5 -out $K_out_file
