@@ -61,7 +61,7 @@ def break_judgment(gff_file_list,Average_gene_region_length,gene_name1,gene_name
     gap_length  = abs(gene2_start - gene1_end)
     if gene1_accession_num != gene2_accession_num :
         return  False
-    elif gap_length >= int(Average_gene_region_length) * 5:
+    elif gap_length >= int(Average_gene_region_length) * 3:
         return False
     else:
         return True
