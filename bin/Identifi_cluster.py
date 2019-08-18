@@ -132,11 +132,6 @@ def read_m6_2_list(in_file,gff_file,faa_file):
 
 
 
-#Bin_dir = os.path.abspath(sys.argv[0])
-
-#in_file = "G:\\py_project\\OKCP\\test\\O_blastout.m6"
-#gff_file = "G:\\py_project\\OKCP\\test\\RA-CH-2.gff"
-#faa_file = "G:\\py_project\\OKCP\\test\\RA-CH-2.faa"
 
 if __name__=='__main__':
     try:
