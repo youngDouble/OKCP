@@ -13,15 +13,15 @@ Description:
 	blast+ (>= 2.6.0) ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/  
 	HMMER3 (>= 3.2.1) http://hmmer.org/  
 	Tmhmm2 http://www.cbs.dtu.dk/cgi-bin/nph-sw_request?tmhmm   
-
-*Python packages :*  
+  
+  *Python packages :*  
 	Biopython (>=1.71) https://biopython.org/wiki/Download  
 
 **Install**  
-```git clone https://github.com/youngDouble/OKCP.git```
+`git clone https://github.com/youngDouble/OKCP.git`
 
 Usage:  
-
+```
 OKCP.py  -gb gbk_file  -bT blast_thread hmm_db -hT hmm_thread  
 ARGUMENTS:  
         -gb gbk_file  
@@ -29,3 +29,4 @@ ARGUMENTS:
         -HMM hmm_db  
         -hT hmm_thread  
 OPTIONAL:  
+```
