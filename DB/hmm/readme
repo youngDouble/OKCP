@@ -1,0 +1,63 @@
+#In bash shell 
+
+#Note！！！！！ 
+these codes are not necessarily executable code, some are pseudocode
+#Note！！！！！ 
+
+#Step1 
+#Download protein sequence of wzy wzx wza wzc wzt wzm
+esearch -db protein -query '(O-antigen translocase[Protein Name] OR wzx[Gene Name] OR wzx[Protein Name]) NOT partial[Title]  ' |efetch -format fasta_cds_aa >> wzx_DB_from_NCBI_fasta_cds_aa.faa
+esearch -db protein -query '(O-antigen polymerase[Protein Name] OR wzy[Gene Name] OR wzy[Protein Name]) NOT partial[Title]'|efetch -format fasta_cds_aa >> wzy_DB_from_NCBI_fasta_cds_aa.faa
+esearch -db protein -query '(polysaccharide export protein[Protein Name] OR wza[Protein Name] OR wza[Gene Name]) NOT partial[partial]  ' |efetch -format fasta_cds_aa >>wza_DB_from_NCBI_fasta_cds_aa.faa
+esearch -db protein -query '(Tyrosine protein kinase[Protein Name] OR wzc[Protein Name] OR wzc[Gene Name]) NOT partial[partial] '|efetch -format fasta_cds_aa >> wzc_DB_from_NCBI_fasta_cds_aa.faa
+esearch -db protein -query  ' ((ABC transporter AND[Title] AND (O-antigen OR LPS OR polysaccharide )) OR wzt[Gene Name] OR wzt[Protein Name]) NOT partial[Title] ' |efetch -format fasta_cds_aa >> wzt_DB_from_NCBI_fasta_cds_aa.faa
+esearch -db protein -query  ' (LPS efflux transporter membrane protein[Title] OR wzm[Protein Name] OR wzm[Gene Name] ) NOT partial[Title] ' |efetch -format fasta_cds_aa >> wzm_DB_from_NCBI_fasta_cds_aa.faa
+
+#Step2
+#Cluster proteins by cd-hit
+for i in `ls *_aa.faa`
+do
+cd-hit -n 2 -c 0.5 -d 2000 -M 50000 -s 0.5 -aL 0.5 -g 1 -T 15  -i  $i -o ${i}_0.5_cluster.out  
+done
+
+#Step3
+#Extract each cluster's protein sequence into a faa file based on the cluster file
+
+#Step4
+#Construct a hmm model for each cluster of wza wzc wzx wzy with more than 3 members
+
+#Step5
+#Non-redundant protein family alignment
+mafft –quiet  --thread 20 --auto  $i > ${name}.aln 
+#convert aln to sto
+./seq_format_convert.py fasta stockholm ${name}.aln ${name}.sto
+#building hmm model for echo  protein family
+hmmbuild ${name}.hmm ${name}.sto 
+#merge hmm model 
+cat ${name}.hmm >>../wza_wzc_wzx_wzy.hmm
+hmmpress wza_wzc_wzx_wzy.hmm
+
+#Step6
+#For a cluster of less than 3 members, only the sequence of more than 100 amino acids is retained to construct the blast database.
+for i in `ls *_0.5_cluster.out.clstr`
+do
+mkdir ${i%_DB*}_blast
+faa_file=${i%_0.5_cluster*}
+cd ${i%_DB*}
+../clusterless_three.py ../$i ../$faa_file  ${i%_DB*}
+cd ..
+done
+
+for faa in `ls  *_blast/*.faa`
+do
+gene=${faa%_blast*}
+perl -p -i -e 's/\>lcl\|/\>'"$gene"' /'  $faa
+grep -v \> $faa |sort -u |while read line
+do
+len_num=`echo "$line" |wc -c `
+if [ "$len_num" -ge 100 ]
+then
+grep -wB 1  "$line"  $faa   >> wza_wzc_wzx_wzy_clusterless_three.faa
+fi
+done
+
