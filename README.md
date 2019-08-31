@@ -19,7 +19,7 @@ Description:
   - Biopython (>=1.71) https://biopython.org/wiki/Download  
 
 **Install**  
- `git clone https://github.com/youngDouble/OKCP.git` //bash
+ git clone https://github.com/youngDouble/OKCP.git //bash
 
 Usage:  
 ```
