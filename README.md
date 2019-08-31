@@ -8,24 +8,24 @@
 Description:
  OKCP is used to annotate genomic proteins to the O&K antigen database.
  
-**Requirements:**
-	python (>= 2.7.9) https://www.python.org
-	blast+ (>= 2.6.0) ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
-	HMMER3 (>= 3.2.1) http://hmmer.org/
-	Tmhmm2 http://www.cbs.dtu.dk/cgi-bin/nph-sw_request?tmhmm 
+**Requirements:**  
+	python (>= 2.7.9) https://www.python.org  
+	blast+ (>= 2.6.0) ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/  
+	HMMER3 (>= 3.2.1) http://hmmer.org/  
+	Tmhmm2 http://www.cbs.dtu.dk/cgi-bin/nph-sw_request?tmhmm   
 
-*Python packages :*
-	Biopython (>=1.71) https://biopython.org/wiki/Download
+*Python packages :*  
+	Biopython (>=1.71) https://biopython.org/wiki/Download  
 
-**Install**
+**Install**  
 ```git clone https://github.com/youngDouble/OKCP.git```
 
-Usage:
+Usage:  
 
-OKCP.py  -gb gbk_file  -bT blast_thread hmm_db -hT hmm_thread
-ARGUMENTS:
-        -gb gbk_file
-        -bT blast_thread
-        -HMM hmm_db
-        -hT hmm_thread
-OPTIONAL:
+OKCP.py  -gb gbk_file  -bT blast_thread hmm_db -hT hmm_thread  
+ARGUMENTS:  
+        -gb gbk_file  
+        -bT blast_thread  
+        -HMM hmm_db  
+        -hT hmm_thread  
+OPTIONAL:  
