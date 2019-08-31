@@ -1,4 +1,4 @@
- ![OKCP](https://github.com/youngDouble/OKCP/blob/master/okcp.png OKCP)  
+ ![OKCP](https://github.com/youngDouble/OKCP/blob/master/okcp.png "OKCP")  
  OKCP (O antigen &amp; K antigen gene cluster prediction) is used to predict the O antigen, K antigen gene cluster on the bacterial genome.      
  O&K-antigen synthesis gene cluster annotation pipeline    
                                                             
